@@ -6,13 +6,15 @@ from src.minimax_strategy import MinimaxStrategy
 from src.game_controller import GameController
 from src.gui import TicTacToeGUI
 
+
 def main():
     board = GameBoard()
     human = HumanPlayer("X")
     ai = AIPlayer("O", MinimaxStrategy())
     controller = GameController(human, ai, board)
     gui = TicTacToeGUI(controller)
-    gui.run()
+    gui.run()`
+
 
 if __name__ == "__main__":
     main()
