@@ -104,19 +104,49 @@ class GameBoard:
         # Capture the row and column sizes
         rows = len(self.gameboard)
         cols = len(self.gameboard[0])
+        # Define sentinels
         row_win = None
-        # Check the rows
+        col_win = None
+        diag_win = None
+        anti_diag_win = None
+
+        # Check the rows and columns to see if we find a winning row
         for row in range(rows):
-            print("row: ", row)
+            # Set row win to true and check for a false state (a non-matching symbol)
             row_win = True
+            col_win = True
+            diag_win = True
+            anti_diag_win = True
+            # This inner for loop checks each row for a winner
+            print("\nChecking Rows: ")
+            print(f"Row: {row}, Cols: [0, 1, 2]")
             for col in range(cols):
-                print(self.gameboard[row][col], end= "")
+                # Test rows
+                print(f"Row: {row}, Col: {col}")
+                # print(f"{self.gameboard[row][col]}", end= "")
                 if self.gameboard[row][col] != symbol:
                     row_win = False
-                    break
-            print()
-        print(f"Is {symbol} a winner: {row_win}")
 
+            # This inner for loop checks each column for a winner
+            print("\n\nChecking Columns: ")
+            print(f"Rows: [0, 1, 2], Col: {row}")
+            for col in range(cols):
+                # Test the columns
+                print(f"Col: {row}, Row: {col}")
+                # print(f"{self.gameboard[col][row]}", end="\n")
+                if self.gameboard[col][row] != symbol:
+                    col_win = False
+
+
+
+
+            print(f"Is {symbol} a winner: {col_win}")
+
+            # Check for a winner after the inner loop finishes
+            # iterating over all its values and return True if
+            # a winner is found, or continue checking
+            if row_win or col_win or diag_win:
+                return True
         # Check the columns
 
         # Check the diagonal
@@ -185,12 +215,11 @@ if __name__ == "__main__":
     game.make_move(0, 1, "X")
     game.make_move(0, 2, "0")
     game.make_move(1, 0, "O")
-    game.make_move(1, 1, "O")
+    game.make_move(1, 1, "X")
     game.make_move(1, 2, "O")
     game.make_move(2, 0, "X")
-    game.make_move(2, 1, "X")
+    game.make_move(2, 1, "O")
     game.make_move(2, 2, "X")
-
 
     # Display the winner
     game.is_winner("x")

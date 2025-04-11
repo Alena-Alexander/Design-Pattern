@@ -13,8 +13,10 @@ def main():
     ai = AIPlayer("O", MinimaxStrategy())
     controller = GameController(human, ai, board)
     gui = TicTacToeGUI(controller)
-    gui.run()`
+    gui.run()
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    from pathlib import Path
+    print(Path("../logs"))
