@@ -13,12 +13,12 @@ class GameBoard:
         >>> from src.game_board import GameBoard
         >>> game = GameBoard()
         >>> # Add X and O to the game board
-        >>> game.gameboard[0][0] = "X"
-        >>> game.gameboard[0][1] = "O"
-        >>> game.gameboard[1][0] = "X"
-        >>> game.gameboard[1][1] = "O"
-        >>> game.gameboard[2][0] = "X"
-        >>> game.gameboard[2][1] = "O"
+        >>> game.game_board[0][0] = "X"
+        >>> game.game_board[0][1] = "O"
+        >>> game.game_board[1][0] = "X"
+        >>> game.game_board[1][1] = "O"
+        >>> game.game_board[2][0] = "X"
+        >>> game.game_board[2][1] = "O"
         >>> # Get any empty cells
         >>> print("\\nEmpty cells: ", end="")
         >>> print(game.get_empty_cells(), end="\\n\\n")
@@ -26,7 +26,7 @@ class GameBoard:
         >>> game.display()
 
     """
-    gameboard = Annotated[List, "The GameBoard"]
+    game_board = Annotated[List, "The GameBoard"]
 
     def __init__(self):
         """
@@ -37,12 +37,12 @@ class GameBoard:
         >>> from src.game_board import GameBoard
         >>> game = GameBoard()
         >>> # Add X and O to the game board
-        >>> game.gameboard[0][0] = "X"
-        >>> game.gameboard[0][1] = "O"
-        >>> game.gameboard[1][0] = "X"
-        >>> game.gameboard[1][1] = "O"
-        >>> game.gameboard[2][0] = "X"
-        >>> game.gameboard[2][1] = "O"
+        >>> game.game_board[0][0] = "X"
+        >>> game.game_board[0][1] = "O"
+        >>> game.game_board[1][0] = "X"
+        >>> game.game_board[1][1] = "O"
+        >>> game.game_board[2][0] = "X"
+        >>> game.game_board[2][1] = "O"
         >>> # Get any empty cells
         >>> print("\\nEmpty cells: ", end="")
         >>> print(game.get_empty_cells(), end="\\n\\n")
@@ -50,7 +50,7 @@ class GameBoard:
         >>> game.display()
 """
         # Initializes the board as a 3 by 3 2D list
-        self.gameboard = [["" for _ in range(3)] for _ in range(3)]
+        self.game_board = [["" for _ in range(3)] for _ in range(3)]
 
     def make_move(self, row: int, col: int, symbol: str) -> tuple[bool, str]:
         """
@@ -69,11 +69,11 @@ class GameBoard:
             # Convert symbol to uppercase for convention
             symbol = symbol.upper()
             # Raise an exception, and doesn't place a symbol if a cell is not empty
-            if len(self.gameboard[row][col]) != 0:
+            if len(self.game_board[row][col]) != 0:
                 # Displays an error message
                 raise ValueError("This cell is not empty.")
             # Otherwise places the symbol in a cell if a cell is empty
-            self.gameboard[row][col] = symbol
+            self.game_board[row][col] = symbol
             # Returns true
             return True, ""
         # Raises a ValueError if a human player places a symbol in a none empty cell
@@ -101,31 +101,66 @@ class GameBoard:
         """
         # Symbol must always be uppercase, so make sure to change to uppercase
         symbol = symbol.upper()
-        # Capture the row and column sizes
-        rows = len(self.gameboard)
-        cols = len(self.gameboard[0])
-        # Define sentinels
-        row_win = None
-        col_win = None
-        diag_win = None
-        anti_diag_win = None
+
+        # Check if you have a row win and return before resetting the variable
+        if self._row_win(symbol):
+            return True
 
         # Check the rows and columns to see if we find a winning row
+        if self._col_win(symbol):
+            return True
+
+        # Checks diagonal for a winner
+        if self._diag_win(symbol):
+            return True
+
+        # Check the anti-diagonal for a winner
+        if self._anti_diag_win(symbol):
+            return True
+
+        return False
+
+    def _anti_diag_win(self, symbol: str):
+        # Symbol must always be uppercase, so make sure to change to uppercase
+        symbol = symbol.upper()
+        # Capture the row and column sizes
+        rows = len(self.game_board)
+        cols = len(self.game_board[0]) - 1
+
+        # This inner for loop checks each anti-diagonal for a winner
         for row in range(rows):
-            # Set row win to true and check for a false state (a non-matching symbol)
-            row_win = True
+            print(f"({row},{cols}) => {self.game_board[row][cols]}")
+
+            if self.game_board[row][cols] != symbol:
+                print(f"Found a false: ({row}, {cols})")
+                return False
+            cols -= 1
+        return True
+
+    def _diag_win(self, symbol: str):
+        # Symbol must always be uppercase, so make sure to change to uppercase
+        symbol = symbol.upper()
+        # Capture the gameboard size
+        indexes = len(self.game_board)
+        # Check the diagonal in a single pass
+        for index in range(indexes):
+            if self.game_board[index][index] != symbol:
+                return False
+
+        return True
+
+    def _col_win(self, symbol: str):
+        # Symbol must always be uppercase, so make sure to change to uppercase
+        symbol = symbol.upper()
+        # Capture the row and column sizes
+        rows = len(self.game_board)
+        cols = len(self.game_board[0])
+
+        # Check the columns to see if we find a winning column
+        for row in range(rows):
+            # Set column win to true and check for a false state (a non-matching symbol)
+            # Define sentinels
             col_win = True
-            diag_win = True
-            anti_diag_win = True
-            # This inner for loop checks each row for a winner
-            print("\nChecking Rows: ")
-            print(f"Row: {row}, Cols: [0, 1, 2]")
-            for col in range(cols):
-                # Test rows
-                print(f"Row: {row}, Col: {col}")
-                # print(f"{self.gameboard[row][col]}", end= "")
-                if self.gameboard[row][col] != symbol:
-                    row_win = False
 
             # This inner for loop checks each column for a winner
             print("\n\nChecking Columns: ")
@@ -134,31 +169,48 @@ class GameBoard:
                 # Test the columns
                 print(f"Col: {row}, Row: {col}")
                 # print(f"{self.gameboard[col][row]}", end="\n")
-                if self.gameboard[col][row] != symbol:
+                if self.game_board[col][row] != symbol:
                     col_win = False
 
-
-
-
-            print(f"Is {symbol} a winner: {col_win}")
-
-            # Check for a winner after the inner loop finishes
-            # iterating over all its values and return True if
-            # a winner is found, or continue checking
-            if row_win or col_win or diag_win:
+            # Check if you have a column win and return before resetting the variable
+            if col_win:
                 return True
-        # Check the columns
 
-        # Check the diagonal
+        return False
 
-        # Check the anti-diagonal
+    def _row_win(self, symbol: str):
+        # Symbol must always be uppercase, so make sure to change to uppercase
+        symbol = symbol.upper()
+        # Capture the row and column sizes
+        rows = len(self.game_board)
+        cols = len(self.game_board[0])
 
-        return True
+        # Check the rows to see if we find a winning row
+        for row in range(rows):
+            # Set row win to true and check for a false state (a non-matching symbol)
+            # Define sentinels
+            row_win = True
+
+            # This inner for loop checks each row for a winner
+            print("\nChecking Rows: ")
+            print(f"Row: {row}, Cols: [0, 1, 2]")
+            for col in range(cols):
+                # Test rows
+                print(f"Row: {row}, Col: {col}")
+                # print(f"{self.gameboard[row][col]}", end= "")
+                if self.game_board[row][col] != symbol:
+                    row_win = False
+
+            # Check if you have a row win and return before resetting the variable
+            if row_win:
+                return True
+
+        return False
 
     def is_full(self) -> bool:
         """Check if the board is full (no empty spaces)."""
         # If there are 0 empty cells in the board return True
-        if self.get_empty_cells() == 0:
+        if len(self.get_empty_cells()) == 0:
             return True
         # Else if there are empty cells return False
         else:
@@ -175,11 +227,11 @@ class GameBoard:
         # Empty tuple
         empty_cells = []
         # Iterates through the rows in self.gameboard
-        for row in range(len(self.gameboard)):
+        for row in range(len(self.game_board)):
             # Iterates through the columns in self.gameboard
-            for col in range(len(self.gameboard[row])):
+            for col in range(len(self.game_board[row])):
                 # If a cell in self.gameboard is empty add it to the empty cell tuple
-                if len(self.gameboard[row][col]) == 0:
+                if len(self.game_board[row][col]) == 0:
                     empty_cells.append((row, col))
 
         # Return the tuple containing a list of empty cells
@@ -188,7 +240,7 @@ class GameBoard:
     def display(self) -> None:
         """Print the board to the console for debugging."""
         print()
-        for row in self.gameboard:
+        for row in self.game_board:
             # Newline sentinel used to parse and format the 3X3 2D array
             # so it is stacked 3X3.
             newline = 3
@@ -208,23 +260,3 @@ class GameBoard:
                     print(" ]", end="\n")
 
 
-if __name__ == "__main__":
-    game = GameBoard()
-    # Add X and O to the game board
-    game.make_move(0, 0, "X")
-    game.make_move(0, 1, "X")
-    game.make_move(0, 2, "0")
-    game.make_move(1, 0, "O")
-    game.make_move(1, 1, "X")
-    game.make_move(1, 2, "O")
-    game.make_move(2, 0, "X")
-    game.make_move(2, 1, "O")
-    game.make_move(2, 2, "X")
-
-    # Display the winner
-    game.is_winner("x")
-    # Get any empty cells
-    # print("\nEmpty cells: ", end="")
-    # print(game.get_empty_cells(), end="\n\n")
-    # Display the game board
-    game.display()

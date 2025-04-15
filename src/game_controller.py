@@ -33,3 +33,27 @@ class GameController:
             tuple[bool, str]: (is_over, result_message).
         """
         pass
+
+
+if __name__ == "__main__":
+    game = GameBoard()
+    # Add X and O to the game board
+    game.make_move(0, 0, "O")
+    game.make_move(0, 1, "X")
+    game.make_move(0, 2, "X")
+    game.make_move(1, 0, "O")
+    game.make_move(1, 1, "X")
+    game.make_move(1, 2, "O")
+    game.make_move(2, 0, "X")
+    game.make_move(2, 1, "O")
+    game.make_move(2, 2, "X")
+
+    # Display the winner
+    print(f"\n\nIs 'X' a winner {game.is_winner('x')}")
+
+    game.display()
+
+    for i in [0, 1, 2]:
+        print(i, i)
+        print(game.game_board[i][i])
+

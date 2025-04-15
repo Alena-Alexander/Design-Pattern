@@ -42,7 +42,3 @@ class HumanPlayer(Player):
         """
         return board.make_move(symbol=self.symbol, row=row, col=col)
 
-
-# if __name__ == "__main__":
-#     human_player = HumanPlayer("X")
-#     print(human_player.symbol)
