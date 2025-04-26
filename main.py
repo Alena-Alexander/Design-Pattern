@@ -17,6 +17,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    from pathlib import Path
-    print(Path("../logs"))
+    main()

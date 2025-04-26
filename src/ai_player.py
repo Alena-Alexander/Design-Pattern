@@ -7,7 +7,14 @@ from src.move_strategy import MoveStrategy
 
 
 class AIPlayer(Player):
-    """Represents an AI player using a strategy for moves."""
+    """
+    Represents an AI player using a strategy for moves.
+
+    Example
+    =======
+    >>> if button.text() == "" and self.controller.board.game_board[row][col] == "":
+    >>>     self.controller.board.make_move(row, col, player.symbol)
+    """
 
     def __init__(self, symbol: str, strategy: MoveStrategy):
         """
@@ -17,10 +24,11 @@ class AIPlayer(Player):
             symbol (str): 'X' or 'O'.
             strategy (MoveStrategy): The move-making strategy.
         """
+
         super().__init__(symbol)
         self.strategy = strategy
 
-    def make_move(self, board: GameBoard) -> tuple[int, int]:
+    def find_best_move(self, board: GameBoard) -> tuple[int, int]:
         """
         Use the strategy to pick and make a move.
 
@@ -30,4 +38,5 @@ class AIPlayer(Player):
         Returns:
             tuple[int, int]: (row, col) of the chosen move.
         """
-        return self.strategy.find_best_move(board, super())
+
+        return self.strategy.find_best_move(board, self)

@@ -10,7 +10,7 @@ class HumanPlayer(Player):
     Represents a human player interacting via GUI clicks.
 
     Example:
-    =======
+    ========
     >>> from src.human_player import HumanPlayer
     >>> player = HumanPlayer()
     >>> # Note: GameBoard is used as example in this instance and must
@@ -26,9 +26,10 @@ class HumanPlayer(Player):
         Parameters:
             symbol (str): 'X' or 'O'.
         """
+
         super().__init__(symbol)
 
-    def make_move(self, board: GameBoard, row: int, col: int) ->  tuple[bool, str]:
+    def make_move(self, board: GameBoard, row: int, col: int) -> tuple[bool, str]:
         """
         Attempt to place the player's symbol on the board.
 
@@ -40,5 +41,6 @@ class HumanPlayer(Player):
         Returns:
             bool: True if move succeeds, False if invalid.
         """
+
         return board.make_move(symbol=self.symbol, row=row, col=col)
 
