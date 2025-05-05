@@ -93,7 +93,7 @@ class TicTacToeGUI(QMainWindow):
 
                 # Add button to button container
                 self.button_container[r][c] = button
-                log.info(f"Row: {r}, Column: {c}")
+
 
         # Set the fixed size for the Label
         self.label.setText("")
@@ -167,7 +167,7 @@ class TicTacToeGUI(QMainWindow):
         # If button cell on GUI or game board != "" display a message the says "Try again!"
         if button.text() != "" and self.controller.board.game_board[row][col] != "":
             self.label.setText("Try again!")
-            log.info("User pressed a button that was not empty!")
+
 
             # Return None
             return None
@@ -182,8 +182,7 @@ class TicTacToeGUI(QMainWindow):
             self.controller.board.make_move(row, col, player.symbol)
             button.setText(player.symbol)
             self.show()
-            log.info("User made a move!")
-            log.info(self.controller.board)
+
 
         # TODO: step 3:
         #   Check if the last move made was a winning move;
@@ -199,12 +198,12 @@ class TicTacToeGUI(QMainWindow):
         # the result message of who won, else it switches to the AI player
         if is_over:
             self.label.setText(result_message)
-            log.info("The Human player wins!")
+
             return None
         else:
             self.controller.switch_player()
             player = self.controller.current_player
-            log.info(f"Its the {player} turn!")
+
 
         # TODO: step 4:
         #   Find the best move for the AI player using the
@@ -213,7 +212,7 @@ class TicTacToeGUI(QMainWindow):
 
         # Get the row and col of the best move
         row, col = self.controller.find_best_ai_move()
-        log.info(f"Player: {player.symbol}, clicks at: ({row}, {col})")
+
 
         # Retrieves a button from the button container
         button: QPushButton = self.button_container[row][col]
@@ -221,7 +220,7 @@ class TicTacToeGUI(QMainWindow):
         # If button cell on GUI or game board != "" display a message the says "Try again!"
         if button.text() != "" and self.controller.board.game_board[row][col] != "":
             self.label.setText("Try again!")
-            log.info("AI player pressed a button that was not empty!")
+
 
             # Return None
             return None
@@ -232,8 +231,7 @@ class TicTacToeGUI(QMainWindow):
             self.controller.board.make_move(row, col, player.symbol)
             button.setText(player.symbol)
             self.show()
-            log.info("AI player made a move!")
-            log.info(self.controller.board)
+
 
         # TODO: step 5:
         #   Check if the last move made was a winning move;
@@ -250,14 +248,14 @@ class TicTacToeGUI(QMainWindow):
             # the result message of who won, else it switches to the AI player
             if is_over:
                 self.label.setText(result_message)
-                log.info("The AI player wins! ")
+
                 # We switch turn back to human player. So the user can start a new game.
                 self.controller.switch_player()
                 return None
             else:
                 self.controller.switch_player()
                 player = self.controller.current_player
-                log.info(f"Its the {player} turn!")
+
 
     def show_result(self) -> None:
         """
@@ -273,13 +271,13 @@ class TicTacToeGUI(QMainWindow):
         # Kill two birds with one stone!
         for r in range(3):
             for c in range(3):
-                log.info(f"Resetting: row: {r}, column: {c}")
+
                 # Resets the gui game board
                 button: QPushButton = self.button_container[r][c]
                 button.setText("")
                 # Resets the game board in the GameBoard class
                 self.controller.board.game_board[r][c] = ""
-        log.info(f"Gameboard: {self.controller.board}")
+
 
     def run(self) -> None:
         """Start the GUI application."""

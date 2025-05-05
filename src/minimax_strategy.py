@@ -73,14 +73,13 @@ class MinimaxStrategy(MoveStrategy):
 
         # Assigns best score to the highest negative int
         best_score = float("inf")   # Represents the minimizing player best score
-        log.info(f" -Infinity: {best_score}, Is 1 > -inf : {1 > best_score}")
+
         # Assigns best move to None
         best_move = None
         best_moves = []
         # If player symbol == "X" it changes to "O", else it switches to "X"
         opponent = Player("O" if player.symbol == "X" else "X")
-        log.info(F"Opponent: {opponent.symbol}, Player: {player.symbol}")
-        log.info(f"Game Board: {board}")
+
 
         # Iterates through each row and col in the list of empty cells
         for row, col in board.get_empty_cells():
@@ -88,7 +87,7 @@ class MinimaxStrategy(MoveStrategy):
             board.make_move(row, col, player.symbol)
             # Adds each move the maximizing player makes to the score
             score, winner_player = self.minimax(board, 0, True, player, opponent)
-            log.info(f"Testing: Row: {row}, Column: {col}, Score: {score}, Player: {winner_player}")
+
 
             # Undoes move
             board.game_board[row][col] = ""
@@ -100,7 +99,7 @@ class MinimaxStrategy(MoveStrategy):
                 # represents a win on the next move for the AI Player.
                 # So, this represents an opportunistic player
                 if score == 10 and winner_player == player:
-                    log.info(f"Best Overall: Row: {row}, Column: {col}, Score: {score}, Player: {winner_player}")
+
                     return row, col
                 # And, this represents any other condition to block the
                 # human player
@@ -108,9 +107,7 @@ class MinimaxStrategy(MoveStrategy):
                     best_score = score
                     best_move = row, col
                     best_moves.append(best_move)
-                    log.info(f"Best score: {best_score}, Row: {row}, Col: {col}")
-                    log.info(f"Best moves are: {best_moves}")
-        log.info(f"Best Overall Score: {best_score}, Best Overall Move: {best_move}")
+
         return best_move
 
     def minimax(self,
@@ -156,16 +153,15 @@ class MinimaxStrategy(MoveStrategy):
                 # Decomposes each cell
                 row, col = cell
 
-                # Prints the row, depth, and column of the game
-                log.info(f"Going Down the game tree (Maximizing): \nDepth: {depth}, Row:{row}, Col: {col}")
+
 
                 # The maximizing player makes a move
                 board.make_move(row, col, opponent.symbol)
-                log.info(board)
+
 
                 # Adds each move the maximizing player makes to the score
                 score, winner_player = self.minimax(board, depth + 1, False, player, opponent)
-                log.info(f"Removing from game board at (Maximizing): Row:{row}, Col: {col}")
+
 
                 # Undoes the move made by the player
                 board.game_board[row][col] = ""
@@ -174,8 +170,7 @@ class MinimaxStrategy(MoveStrategy):
                 # Chooses the best score
                 best_score = max(best_score, score)
 
-                # Prints the depth and best score
-                log.debug(f"Going Up the game tree (Maximizing): \nDepth: {depth}, Best score: {best_score}")
+
 
             # Returns the best score
             return best_score, winner_player
@@ -190,12 +185,11 @@ class MinimaxStrategy(MoveStrategy):
                 # Decomposes each cell
                 row, col = cell
 
-                # Prints the row, depth, and column of the game
-                log.info(f"Going Down the game tree (Minimizing): \nDepth: {depth}, Row:{row}, Col: {col}")
+
                 board.make_move(row, col, player.symbol)
                 log.info(board)
                 score, winner_player = self.minimax(board, depth + 1, True, player, opponent)
-                log.info(f"Removing from game board at (Minimizing): Row:{row}, Col: {col}")
+
 
                 # Undoes the move made by the player
                 board.game_board[row][col] = ""
@@ -203,6 +197,6 @@ class MinimaxStrategy(MoveStrategy):
 
                 # Chooses the best score
                 best_score = min(best_score, score)
-                log.debug(f"Going Up the game tree (Minimizing): \nDepth: {depth}, Best score: {best_score}")
+
             return best_score, winner_player
 
