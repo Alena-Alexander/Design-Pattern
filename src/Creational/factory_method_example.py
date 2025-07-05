@@ -167,10 +167,80 @@ class ACCAudioExporter(AudioExporter):
         """
         print(f"Exporting audio data in ACC format to {folder}")
 
+
 class WAVAudioExporter(AudioExporter):
     """
     Converts an audio file containing its layers, effects, and settings, and exports after altering them, and exports
     these changes in the WAV format into a playable audio file.
     """
 
+    def prepare_export(self, audio_data):
+        """
+        Retrieves the actual audio data for WAV export(its layers, effects, and settings).
 
+        :param audio_data:
+        :return: File
+        """
+        print("Preparing audio data for WAV export")
+
+    def do_export(self, folder: pathlib.Path):
+        """
+        Exports the data to a folder.
+
+        :param folder:
+        :return: File
+        """
+        print(f"Exporting audio data in WAV format to {folder}")
+
+
+def main() -> None:
+    """
+    Main function.
+    :return: None
+    """
+
+    # Asks for the preferred export quality
+    export_quality: str # sets type as String
+    while True:
+        """
+        As long as said while loop is true this program will ask the user to enter a desired quality for the export
+        and if the quality is on of the option in "low", "high", "master" then the program will break, else it will dis-
+        play a message saying "Unknown quality option: {export_quality}".
+        """
+        export_quality = input("Enter desired output quality (low, high, master): ")
+        if export_quality in {"low", "high", "master"}:
+            break # Terminates the nearest enclosing loop and and skips the else clause if the loop has one
+        else:
+            print(f"Unknown quality option: {export_quality}")
+
+    # Create the video and audio exporters, and executes depending on the quality the user chooses.
+    """
+    The program below executes two classes that will export audio and a video depending on the quality the user chooses.
+    """
+    video_exporter: VideoExporter
+    audio_exporter: AudioExporter
+    if export_quality == "low":
+        video_exporter = H264BPVideoExporter()
+        audio_exporter = ACCAudioExporter()
+    elif export_quality == "high":
+        video_exporter = H264Hi422PVideoExporter()
+        audio_exporter = ACCAudioExporter()
+    else:
+        # The export quality is master.
+        video_exporter = LosslessVideoExporter()
+        audio_exporter = WAVAudioExporter()
+
+    # Prepare the exports
+    # This code retrieves data for the video and audio
+    video_exporter.prepare_export("place_holder_for_audio_data")
+    audio_exporter.prepare_export("place_holder_for_audio_data")
+
+    # Do the export
+    # assigns folder to a path to a file, and exports the video and audio to said file
+    folder = pathlib.Path("/usr/tmp/video")
+    video_exporter.do_export(folder)
+    audio_exporter.do_export(folder)
+
+
+if __name__ == "__main__":
+    main()
