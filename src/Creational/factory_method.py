@@ -73,7 +73,7 @@ class FlowerShirt(ShirtFactory):
         return self._material
 
 
-def main():
+def main() -> None:
     """
     As long as this while loop is True the program will ask the user to "Choose a shirt between the Skull shirt,
     and Flower shirt, to identify "the materials of it" and if the shirt chosen is within the two options given then
@@ -81,9 +81,10 @@ def main():
 
     :return: str
     """
+
     while True:
-        shirt_chosen = input("Choose a shirt between the Skull shirt, and Flower shirt, to identify "
-                             "the materials of it")
+        shirt_chosen = input("Enter a shirt between the Skull shirt, and Flower shirt, to identify "
+                             "the materials of it: ")
 
         if shirt_chosen in ["Skull shirt", "Flower shirt"]:
             break
@@ -96,21 +97,17 @@ def main():
     the SkullShirt class is created, else if the shirt chosen by the user is "Flower shirt", then an instance of
     the FlowerShirt class is created. And then then the methods for the classes are ran.
     """
-    skull_shirt: SkullShirt
-    flower_shirt: FlowerShirt
+    shirt_factory: ShirtFactory
 
     if shirt_chosen == "Skull shirt":
-        skull_shirt = SkullShirt()
+        shirt_factory = SkullShirt()
     elif shirt_chosen == "Flower shirt":
-        flower_shirt = FlowerShirt()
+        shirt_factory = FlowerShirt()
     else:
         print("Meh...")
 
-    skull_shirt.shirt_material()
-    flower_shirt.shirt_material()
-
-    skull_shirt.shirt_color()
-    flower_shirt.shirt_color()
+    shirt_factory.shirt_material()
+    shirt_factory.shirt_color()
 
 
 if __name__ == "__main__":

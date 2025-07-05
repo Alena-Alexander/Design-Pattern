@@ -117,6 +117,12 @@ music player or a log file.
 - **Generic Programming**: Make the singleton hold any type of data
 (e.g., settings could be numbers, text, or lists).
 
+- **Class Diagram**:
+```mermaid
+classDiagram
+class 
+```
+
 ### 2. Factory Method
 - **What is it?**: Provides a certain group of methods for creating
 objects in a superclass, but allows subclasses to inherit from said
@@ -150,6 +156,38 @@ if it’s cheese or pepperoni based on the order.
   
 - **Generic Programming**: Allow the factory to create objects of any
 type by using a common interface.
+
+- **Class Diagram**:
+```mermaid
+classDiagram
+class ShirtFactory{
+    %%Attributes
+    <<abstract>>
+    
+    %%Methods
+    +shirt_color(self) String
+    +shirt_material(self) String
+}
+
+class SkullShirt{
+    + String _color
+    + String _material
+    
+    +shirt_color(self) String
+    +shirt_material(self) String
+}
+
+class FlowerShirt{
+    + String _color
+    + String _material
+    
+    +shirt_color(self) String
+    +shirt_material(self) String
+}
+
+ShirtFactory <|-- SkullShirt
+ShirtFactory <|-- FlowerShirt
+```
 
 ### 3. Abstract Factory
 - **What is it?**: provides a certain group of methods for creating
