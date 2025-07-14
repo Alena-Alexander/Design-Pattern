@@ -120,7 +120,23 @@ music player or a log file.
 - **Class Diagram**:
 ```mermaid
 classDiagram
-class 
+class SingletonOne{
+    +Dict _instances
+    
+    +__call__ (cls, *args, **kwargs) Dict
+}
+
+class Logger{
+    +log(self, msg) String
+}
+```
+
+- **Sequence Diagram**:
+```mermaid
+sequenceDiagram
+    SingletonClass -> type: Inherits from type making it a metaclass and using the __call__ method to alter it
+    
+    
 ```
 
 ### 2. Factory Method
