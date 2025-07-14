@@ -134,9 +134,9 @@ class Logger{
 - **Sequence Diagram**:
 ```mermaid
 sequenceDiagram
-    SingletonClass -> type: Inherits from type making it a metaclass and using the __call__ method to alter it
-    
-    
+    SingletonClass -> TypeClass: Inherits from type making it a metaclass and using the __call__ method to alter it
+    __call__Method -> SingletonClass: Gives access to class & its instance to create only one instance of the class
+    log -> Singleton:Inherits from the Singleton allowing for their to be one instance created of it
 ```
 
 ### 2. Factory Method
