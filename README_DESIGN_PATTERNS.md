@@ -134,9 +134,10 @@ class Logger{
 - **Sequence Diagram**:
 ```mermaid
 sequenceDiagram
-    SingletonClass -> TypeClass: Inherits from type making it a metaclass and using the __call__ method to alter it
-    __call__Method -> SingletonClass: Gives access to class & its instance to create only one instance of the class
-    log -> Singleton:Inherits from the Singleton allowing for their to be one instance created of it
+    participant Singleton as SingletonOne
+    participant Logger as Logger
+    
+    Singleton-)Logger:  Creates only one instance of Logger instance
 ```
 
 ### 2. Factory Method
@@ -203,6 +204,19 @@ class FlowerShirt{
 
 ShirtFactory <|-- SkullShirt
 ShirtFactory <|-- FlowerShirt
+```
+
+- **Sequence Diagram**:
+```mermaid
+sequenceDiagram
+    participant ShirtFactory as ShirtFactory
+    participant SkullShirt as SkullShirt
+    participant FlowerShirt as FlowerShirt
+    
+    ShirtFactory-)SkullShirt: Creates a blueprint for SkullShirt class to following when inheriting from it
+    ShirtFactory-)FlowerShirt: Creates a blueprint for SkullShirt class to following when inheriting from it
+    SkullShirt-)ShirtFactory: Inherits form the Shirtfactory class and gives two methods a function to display the skull shirts material and color
+    FlowerShirt-)ShirtFactory: Inherits form the Shirtfactory class and gives two methods a function to display the flower shirts material and color
 ```
 
 ### 3. Abstract Factory

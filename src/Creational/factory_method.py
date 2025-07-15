@@ -92,7 +92,7 @@ def main() -> None:
             print("invalid option was chosen...")
 
     """
-    The code below identifie the variables skull_shirt and flower_shirt as type SkullShirt, and FlowerShirt, allowing
+    The code below identifies the variables skull_shirt and flower_shirt as type SkullShirt, and FlowerShirt, allowing
     you to use those classes methods and such. And if the shirt chosen by the user is "Skull shirt", then an instance of
     the SkullShirt class is created, else if the shirt chosen by the user is "Flower shirt", then an instance of
     the FlowerShirt class is created. And then then the methods for the classes are ran.
