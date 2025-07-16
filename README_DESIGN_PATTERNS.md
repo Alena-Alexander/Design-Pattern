@@ -136,7 +136,9 @@ class Logger{
 sequenceDiagram
     participant Singleton as SingletonOne
     participant Logger as Logger
+    participant Type as type
     
+    Singleton-)Type: Inherits from the type metaclass to use its __call__ method to alter the class itself a metaclass
     Singleton-)Logger:  Creates only one instance of Logger instance
 ```
 
@@ -212,7 +214,9 @@ sequenceDiagram
     participant ShirtFactory as ShirtFactory
     participant SkullShirt as SkullShirt
     participant FlowerShirt as FlowerShirt
+    participant ABC as ABC
     
+    ShirtFactory-)ABC: Inherits from ABC making it an abstract class
     ShirtFactory-)SkullShirt: Creates a blueprint for SkullShirt class to following when inheriting from it
     ShirtFactory-)FlowerShirt: Creates a blueprint for SkullShirt class to following when inheriting from it
     SkullShirt-)ShirtFactory: Inherits form the Shirtfactory class and gives two methods a function to display the skull shirts material and color
