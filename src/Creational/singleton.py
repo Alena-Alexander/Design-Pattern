@@ -35,7 +35,7 @@ class SingletonOne(type):
 
 class Logger(metaclass=SingletonOne):
     """
-    Inherits from the SingletonOne class allowing there to only be one instance of a class
+    Inherits from the SingletonOne class allowing there to only be one instance of a class.
     """
 
     def log(self, msg):
