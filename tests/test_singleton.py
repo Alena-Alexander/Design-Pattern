@@ -38,5 +38,5 @@ if __name__ == "__main__":
     logger2 = Logger()
     print(logger)
     print(logger2)
-    logger.test_log("Hello")
+    logger.test_log("Hello..")
     logger.test_log("Hi..")
