@@ -13,7 +13,7 @@ import pathlib
 from abc import ABC, abstractmethod
 
 
-class VideoExporter(ABC):
+class TestVideoExporter(ABC):
     """
     An abstract class that contains two methods that only describes how other classes should implement them
     and the functions of a Video exporter.
