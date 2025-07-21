@@ -22,3 +22,7 @@ class TestAbstractFactory(unittest.TestCase):
         self.assertIsInstance(flower_shirt, ShirtFactory, "FlowerShirt is not an instance of the ShirtFactory class")
         self.assertEqual(flower_shirt.shirt_color(), "Black", "The Flower shirts color is not equal to Black")
         self.assertEqual(flower_shirt.shirt_material(), "Silk", "The Flower shirts material is not equal to Silk")
+
+
+if __name__ == "__main__":
+    unittest.main()
