@@ -91,6 +91,7 @@ class FlowerShirt(Shirt):
         """
         return self._flower
 
+
 class SkullShirt(Shirt):
     """
     The Class represents the most basic aspects of a Skull shirt.
