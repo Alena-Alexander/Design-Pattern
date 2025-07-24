@@ -1,6 +1,5 @@
 from src.Creational.abstract_factory import ShirtFactory, SkullShirt, FlowerShirt
 import unittest
-from abc import ABC
 
 
 class TestAbstractFactory(unittest.TestCase):
